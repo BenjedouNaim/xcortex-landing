@@ -1,0 +1,37 @@
+# Xcortex
+
+> Xcortex engineers AI software, intelligent automation and production systems that help companies understand more, automate more and move faster.
+
+Xcortex is an AI software, automation and engineering agency. We build complete systems, not just models: software, data, integrations, workflows, infrastructure and interfaces, designed around a path to production.
+
+## What we build
+
+- Understand (Perception & RAG): systems that read, interpret, classify, search and reason across complex information. Document Intelligence, RAG, LLMs, Vision AI.
+- Decide (Reasoning & Logic): AI systems that combine context, rules, models and business logic to produce reliable decisions. AI Agents, Decision Systems, Routing, BI.
+- Act (Execution & Flow): autonomous workflows that connect intelligence to the tools and systems where work happens. AI Automation, Agentic Workflows, Tool Calling, APIs.
+- Build (Full-Stack Systems): production-grade software engineered around your users, data, infrastructure and business. SaaS Platforms, Web Apps, Internal Tools, Cloud.
+- Connect (Integration Layer): intelligence that works across the systems your business already uses. APIs, Databases, CRMs, Cloud Services.
+- Evolve (Continuous Delivery): systems designed to be monitored, improved and extended over time. Observability, Evaluation, Optimization, CI/CD.
+
+## Solutions
+
+- Document Intelligence: turn unstructured documents into searchable knowledge, structured data and actionable information.
+- AI Agents: systems that understand context, use tools, make decisions and complete multi-step tasks.
+- Intelligent Automation: connect AI to existing workflows so repetitive operations can happen automatically.
+
+## How engagements work
+
+We do not start with a model. We start with the problem, design the system around it, then engineer the smallest reliable solution that can create real value.
+
+1. Understand: map the problem, workflow, data, users, constraints and desired outcome.
+2. Design: define the architecture, intelligence layer, integrations, data flow and system boundaries.
+3. Engineer: build the software, AI components, automation, APIs and infrastructure required for production.
+4. Evolve: test, evaluate, monitor, improve and extend the system as real usage creates new requirements.
+
+To start, describe the problem you want to solve. Xcortex helps define the system, identify the highest-value opportunity and determine what should be built.
+
+## Contact
+
+- Email: [info@xcortex.info](mailto:info@xcortex.info)
+- Website: [https://xcortex.agency/](https://xcortex.agency/)
+- LinkedIn: [https://www.linkedin.com/company/xcortex/](https://www.linkedin.com/company/xcortex/)
