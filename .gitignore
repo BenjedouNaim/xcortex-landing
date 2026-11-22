@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+.vercel/
+# Playwright
+test-results/
+playwright-report/
+# Lighthouse
+.lighthouseci/
+lhr-*.json

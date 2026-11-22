@@ -1,0 +1,6 @@
+legacy/
+.agents/
+.next/
+docs/
+pnpm-lock.yaml
+tests/__screenshots__/

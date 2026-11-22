@@ -1,0 +1,224 @@
+@import 'tailwindcss';
+
+@theme inline {
+  /* Plain family names, so next/font's size-adjusted fallback faces never draw the arrow glyph (missing from the latin subset) wider than legacy. */
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Tailwind v3 parity: v4 defaults border color to currentColor and buttons to cursor: default. */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Scroll-Reveal Animation System
+   Ease-out entries, transform + opacity only.
+   Hidden starting states live under .js so the page is fully visible without JavaScript.
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Base hidden state for all reveal elements */
+.js [data-aura-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+  will-change: opacity, transform;
+}
+
+/* Visible state. The layer hint is only needed while the transition runs, so drop it afterwards. */
+.js [data-aura-reveal].is-inview {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+/* Custom delay support */
+.js [data-aura-delay='100'] {
+  transition-delay: 100ms;
+}
+
+.js [data-aura-delay='200'] {
+  transition-delay: 200ms;
+}
+
+.js [data-aura-delay='300'] {
+  transition-delay: 300ms;
+}
+
+.js [data-aura-delay='500'] {
+  transition-delay: 500ms;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-aura-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── Scroll Progress Hairline ────────────────────────────────── */
+#xcx-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #0a0a0a;
+  z-index: 9999;
+  pointer-events: none;
+  /* motion.js sets scaleX to the scroll fraction; a transform keeps this off the layout path. */
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* ── Active Nav Link ─────────────────────────────────────────── */
+nav a[data-nav-link].is-active {
+  color: #0a0a0a !important;
+}
+
+nav a[data-nav-link].is-active::after {
+  width: 100% !important;
+}
+
+/* ── FAQ Smooth Accordion ────────────────────────────────────── */
+.faq-item {
+  overflow: hidden;
+}
+
+.js .faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-icon {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.faq-item.is-open .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ── Principle items cascade ─────────────────────────────────── */
+.js .principle-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js .principle-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Hero Pill Scroll-Scrubbed Slide Animation ───────────────── */
+/* The container clips the sliding black box; text is always white. */
+#hero-pill-track {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+}
+
+/* White text sits on top: invisible on white bg, readable on the black box */
+#hero-pill-text {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+/* Black sliding box. Without JS it stays in place behind the text; with JS it starts off-screen left. */
+#hero-pill-box {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  will-change: transform;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, #171717, #000000);
+}
+
+.js #hero-pill-box {
+  transform: translateX(-100%);
+}
+
+:target {
+  scroll-margin-top: 7.5rem;
+}
+
+@keyframes auraConnectionFlow {
+  0% {
+    transform: translateX(-14rem);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(calc(100vw + 14rem));
+    opacity: 0;
+  }
+}
+
+@keyframes auraFinalFloatOne {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-3deg);
+  }
+}
+
+@keyframes auraFinalFloatTwo {
+  0%,
+  100% {
+    transform: translateY(0) rotate(5deg);
+  }
+
+  50% {
+    transform: translateY(10px) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[auraFinalFloatOne_5\.5s_ease-in-out_infinite\],
+  .animate-\[auraFinalFloatTwo_6\.25s_ease-in-out_infinite\] {
+    animation: none;
+  }
+}
+
+/* Skip style, layout and paint work for the sections below the first two until they near the viewport (cuts the first
+   layout pass). Their heights are guesses until rendered, so anchor clicks, hash loads and reloads add .cv-off to render them all. */
+html:not(.cv-off) main > section:nth-of-type(n + 3):not(#architecture),
+html:not(.cv-off) main > footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
