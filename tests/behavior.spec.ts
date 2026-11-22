@@ -450,3 +450,43 @@ test.describe('mobile width', () => {
     expect(inline).toEqual(['', ''])
   })
 })
+
+test.describe('intro loader', () => {
+  // The head script skips the intro under automation; pretend to be a normal browser.
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() =>
+      Object.defineProperty(navigator, 'webdriver', { get: () => false }),
+    )
+  })
+
+  test('plays once per session, locks scroll, holds the pill, skips on click', async ({
+    page,
+  }) => {
+    const errors: string[] = []
+    page.on('pageerror', (e) => errors.push(e.message))
+    page.on('console', (m) => {
+      if (m.type() === 'error') errors.push(m.text())
+    })
+    await page.goto('/')
+    const html = page.locator('html')
+    await expect(html).toHaveClass(/\bintro\b/)
+    await expect(page.locator('#xl-root')).toBeVisible()
+    await waitMotion(page)
+    await page.mouse.wheel(0, 800)
+    await page.waitForTimeout(400)
+    expect(await scrollY(page)).toBe(0)
+    // Breaks if the pill starts behind the loader instead of after it.
+    expect(
+      await page.locator('#hero-scroll-progress').evaluate((e) => e.style.transform),
+    ).not.toBe('scaleX(1)')
+
+    await page.locator('#xl-root').click({ position: { x: 20, y: 200 } })
+    await expect(html).not.toHaveClass(/\bintro\b/, { timeout: 4000 })
+    await expect(page.locator('#xl-root')).toBeHidden()
+    await waitPillDone(page)
+    expect(errors).toEqual([])
+
+    await page.goto('/')
+    await expect(html).not.toHaveClass(/\bintro\b/)
+  })
+})
