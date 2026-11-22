@@ -46,6 +46,8 @@ function start() {
   window.addEventListener('resize', remeasure)
   window.addEventListener('load', remeasure)
   window.__lenis = lenis
+  // The intro loader locks scrolling; public/scripts/loader.js calls lenis.start() when it ends.
+  if (document.documentElement.classList.contains('intro')) lenis.stop()
 
   return () => {
     window.removeEventListener('resize', remeasure)

@@ -10,10 +10,12 @@ import { Approach } from '@/components/sections/Approach'
 import { FinalCta } from '@/components/sections/FinalCta'
 import { Footer } from '@/components/sections/Footer'
 import { JsonLd } from '@/components/JsonLd'
+import { Loader } from '@/components/Loader'
 
 export default function Page() {
   return (
     <>
+      <Loader />
       <div id="xcx-progress-bar" aria-hidden="true" />
       <SmoothScroll />
       {/* Plain deferred script: it runs at parse time, without waiting for React to hydrate. */}

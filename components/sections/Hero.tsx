@@ -4,7 +4,7 @@ import Image from 'next/image'
 export function Hero() {
   return (
     <section className="relative flex min-h-[620px] w-full items-center overflow-hidden bg-white pt-32 pb-20 md:pt-40 md:pb-28 lg:min-h-[720px]">
-      <div className="pointer-events-none absolute inset-0 z-0">
+      <div data-intro-zoom className="pointer-events-none absolute inset-0 z-0">
         <Image
           src="/hero.jpg"
           alt=""

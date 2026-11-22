@@ -192,6 +192,7 @@
     afterHydration(function () {
       if (reduce) finishPill(true)
       else if (w.scrollY > 0 || location.hash) finishPill()
+      else if (document.documentElement.classList.contains('intro')) w.addEventListener('xcx:intro-done', function () { setTimeout(playPill, 300) }, { once: true })
       else setTimeout(playPill, 300)
     })
   }

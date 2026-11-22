@@ -56,8 +56,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             // 'js' (AC-14): hidden starting states exist only under it. The 3s failsafe drops it if motion.js has not run by then.
             // 'cv-off': below-the-fold sections are only skipped on a plain first visit; a hash or a reload/back would land on guessed heights.
+            // 'intro': the loader plays once per tab session, on a plain visit, never under reduced motion or automation; it preloads its photo.
             __html:
-              "var h=document.documentElement,n=performance.getEntriesByType('navigation')[0];h.classList.add('js');if(location.hash||(n&&n.type!=='navigate'))h.classList.add('cv-off');setTimeout(function(){if(!window.__motion)h.classList.remove('js')},3000)",
+              "var h=document.documentElement,n=performance.getEntriesByType('navigation')[0],p=!location.hash&&(!n||n.type==='navigate'),s;h.classList.add('js');if(!p)h.classList.add('cv-off');try{s=sessionStorage.getItem('xcx-intro')}catch(e){s=1}if(p&&!s&&!navigator.webdriver&&!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('intro');var l=document.createElement('link');l.rel='preload';l.as='image';l.type='image/avif';l.fetchPriority='high';l.href='/loader/mountain-'+(innerWidth<=innerHeight?'mobile':'desktop')+'.avif';document.head.appendChild(l)}setTimeout(function(){if(!window.__motion)h.classList.remove('js');if(!window.__intro)h.classList.remove('intro')},3000)",
           }}
         />
       </head>
