@@ -27,9 +27,9 @@ const html = `
     <rect width="100%" height="100%" filter="url(#xl-grain)"/>
   </svg>
   <div class="xl-vignette" aria-hidden="true"></div>
-  <button id="xl-snd" type="button" class="xl-snd" aria-pressed="false">
+  <button id="xl-snd" type="button" class="xl-snd" aria-pressed="true">
     <span class="xl-bars" aria-hidden="true"><span id="xl-bar0"></span><span id="xl-bar1"></span><span id="xl-bar2"></span><span id="xl-bar3"></span></span>
-    <span id="xl-snd-label">Sound off</span>
+    <span id="xl-snd-label">Sound on</span>
   </button>
   <div id="xl-ui" class="xl-ui" role="status" aria-label="Loading">
     <div id="xl-count" class="xl-count" aria-hidden="true">000</div>

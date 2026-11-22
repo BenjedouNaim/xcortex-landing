@@ -36,7 +36,8 @@
     glow.style.top = y + 'px'
   }
 
-  // Sound: synthesized drone and exit swoosh. Off until the visitor turns it on (a click elsewhere skips the intro).
+  // Sound: synthesized drone and exit swoosh, on by default. Browsers keep audio suspended until the visitor
+  // interacts, so it starts on the first pointer or key press (which also skips to the exit swoosh).
   var ac, master, noise, drone, audioOn = false
   function initAudio() {
     if (ac) return ac
@@ -72,7 +73,7 @@
     d.srcs.forEach(function (s) { try { s.stop(n + fade + 0.2) } catch {} })
   }
   function swoosh() {
-    if (!audioOn) return
+    if (!audioOn || ac.state !== 'running') return
     var n = ac.currentTime, T = 1.5
     var src = ac.createBufferSource(); src.buffer = noise
     var bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.4
@@ -99,6 +100,9 @@
     }, function () {})
   }
   snd.addEventListener('click', function (e) { e.stopPropagation(); setSound(!audioOn) })
+  function unlock() { if (audioOn && ac && ac.state !== 'running') setSound(true) }
+  window.addEventListener('pointerdown', unlock, true)
+  window.addEventListener('keydown', unlock, true)
 
   // Skip: any click on the loader or a key press jumps to the exit slide.
   function skip(e) {
@@ -133,7 +137,7 @@
     if (drone) drone.lp.frequency.setTargetAtTime(120 + p * 520 + hold * 300, ac.currentTime, 0.15)
     if (!swooshed && t >= H - 350) { swooshed = true; if (ac) { swoosh(); stopDrone(1) } }
     snd.style.opacity = eo(clamp((t - 300) / 800)) * (1 - clamp((t - H) / 400))
-    for (var i = 0; i < 4; i++) bars[i].style.height = audioOn ? 30 + 70 * Math.abs(Math.sin(now / (170 + i * 60) + i * 1.7)) + '%' : '30%'
+    for (var i = 0; i < 4; i++) bars[i].style.height = audioOn && ac && ac.state === 'running' ? 30 + 70 * Math.abs(Math.sin(now / (170 + i * 60) + i * 1.7)) + '%' : '30%'
     root.style.transform = 'translateY(' + -ex(clamp((t - H) / 1300)) * 100 + '%)'
     // The hero belongs to React: only touch it once hydrated (CSS holds scale(1.08) until then).
     if (hero && t > H + 200 && window.__hydrated) hero.style.transform = 'scale(' + (1.08 - 0.08 * eo(clamp((t - H - 200) / 1600))) + ')'
@@ -144,6 +148,8 @@
   function finish() {
     cancelAnimationFrame(raf)
     window.removeEventListener('keydown', skip)
+    window.removeEventListener('pointerdown', unlock, true)
+    window.removeEventListener('keydown', unlock, true)
     window.removeEventListener('resize', place)
     try { sessionStorage.setItem('xcx-intro', '1') } catch {}
     if (hero) hero.style.transform = ''
@@ -154,5 +160,6 @@
   }
 
   place()
+  setSound(true)
   raf = requestAnimationFrame(tick)
 })()
