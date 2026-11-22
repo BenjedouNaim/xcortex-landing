@@ -4,7 +4,7 @@ export function Header() {
   return (
     <header className="fixed top-0 right-0 left-0 z-50">
       <nav className="mx-auto max-w-7xl px-6 pt-5">
-        <div className="relative overflow-hidden rounded-full border border-white/90 px-4 py-3 shadow-[0_14px_38px_-22px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,1)] backdrop-blur-2xl">
+        <div className="relative overflow-hidden rounded-full border border-white/90 py-2.5 pr-2.5 pl-3 sm:px-4 sm:py-3 shadow-[0_14px_38px_-22px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,1)] backdrop-blur-2xl">
           <div className="pointer-events-none absolute inset-0 rounded-full"></div>
           <div className="relative z-10 flex items-center justify-between">
             <a href="#" className="group flex items-center gap-3">
@@ -21,7 +21,7 @@ export function Header() {
                 <span className="font-mono text-sm font-semibold tracking-[-0.08em] text-neutral-950 transition-colors group-hover:text-neutral-950">
                   Xcortex
                 </span>
-                <span className="mt-0.5 text-[10px] font-light tracking-[-0.03em] text-neutral-400">
+                <span className="mt-0.5 hidden text-[10px] font-light sm:block tracking-[-0.03em] text-neutral-400">
                   AI · AUTOMATION · ENGINEERING
                 </span>
               </span>
@@ -69,7 +69,7 @@ export function Header() {
               </a>
               <a
                 href="#final-cta"
-                className="inline-flex items-center justify-center rounded-full border border-neutral-800 bg-linear-to-b from-neutral-900 to-black px-4 py-2 text-xs text-white shadow-[0_5px_14px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:from-neutral-800 hover:to-neutral-900"
+                className="inline-flex items-center justify-center rounded-full border border-neutral-800 max-sm:whitespace-nowrap bg-linear-to-b from-neutral-900 to-black px-4 py-2 text-xs text-white shadow-[0_5px_14px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:from-neutral-800 hover:to-neutral-900"
               >
                 Start a project →
               </a>
